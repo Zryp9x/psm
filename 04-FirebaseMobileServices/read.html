@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Read</title>
+  </head>
+
+  <body>
+    <div id="root">
+      <table>
+        <thead>
+          <tr>
+            <td>Marka</td>
+            <td>Model</td>
+            <td>Rocznik</td>
+            <td>Kolor</td>
+            <td>Kraj pochodzenia</td>
+          </tr>
+        </thead>
+        <tbody id="table_body"></tbody>
+      </table>
+    </div>
+
+    <script defer>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyBclt-1e8eoIqxEXmibRPEDnyTPQe-yzuc",
+    authDomain: "cars-6f378.firebaseapp.com",
+    databaseURL: "https://cars-6f378.firebaseio.com",
+    projectId: "cars-6f378",
+    storageBucket: "cars-6f378.appspot.com",
+    messagingSenderId: "418777272563",
+    appId: "1:418777272563:web:f4c1a251e4e473adeda786",
+    measurementId: "G-M737PDHLW4"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      const tableBody = document.getElementById("table_body");
+
+      function renderElements(doc) {
+        let tr = `
+            <tr>
+                <td>${doc.data().marka}</td>
+                <td>${doc.data().model}</td>
+                <td>${doc.data().rocznik}</td>
+                <td>${doc.data().kolor}</td>
+                <td>${doc.data().kraj_pochodzenia}</td>
+            </tr>
+        `;
+
+        tableBody.innerHTML += tr;
+      }
+
+      db.collection("Cars")
+        .get()
+        .then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            renderElements(doc);
+          });
+        });
+    </script>
+  </body>
+</html>

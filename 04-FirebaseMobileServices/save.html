@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-firestore.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Save from json</title>
+  </head>
+
+  <body>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBclt-1e8eoIqxEXmibRPEDnyTPQe-yzuc",
+    authDomain: "cars-6f378.firebaseapp.com",
+    databaseURL: "https://cars-6f378.firebaseio.com",
+    projectId: "cars-6f378",
+    storageBucket: "cars-6f378.appspot.com",
+    messagingSenderId: "418777272563",
+    appId: "1:418777272563:web:f4c1a251e4e473adeda786",
+    measurementId: "G-M737PDHLW4"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+
+      fetch("MOCK_DATA.json")
+        .then((el) => el.json())
+        .then((cars) => {
+          for (let car of cars) {
+            db.collection("Cars").add(car);
+          }
+        })
+        .then(() => alert("success"))
+        .catch((e) => console.log(`Exception caught: ${e}`));
+    </script>
+  </body>
+</html>
